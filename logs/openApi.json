@@ -1,0 +1,133 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "File Upload Service API",
+    "description": "This API exposes endpoints to manage file uploads.",
+    "termsOfService": "https://www.your-terms-of-service-url.com",
+    "contact": {
+      "name": "Felipe Luna",
+      "url": "https://www.unam.mx/",
+      "email": "aluna1997@ciencias.unam.mx"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://choosealicense.com/licenses/mit/"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Server URL in Development environment"
+    },
+    {
+      "url": "https://your-production-url.com",
+      "description": "Server URL in Production environment"
+    }
+  ],
+  "tags": [
+    {
+      "name": "file",
+      "description": "API for file upload registration"
+    }
+  ],
+  "paths": {
+    "/files/register_upload": {
+      "post": {
+        "tags": [
+          "file"
+        ],
+        "summary": "File upload registration",
+        "operationId": "saveFile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FileDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful file upload registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/File"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "File": {
+        "required": [
+          "format",
+          "locatedService",
+          "name",
+          "url",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador único del archivo",
+            "example": "60f1a5b2c0e1a23d68d65a7e"
+          },
+          "url": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "description": "URL donde se puede acceder al archivo",
+            "example": "https://storage.googleapis.com/my-bucket/document.pdf"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Nombre del archivo, incluyendo su extensión",
+            "example": "document.pdf"
+          },
+          "format": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "description": "Formato o extensión del archivo",
+            "example": "pdf"
+          },
+          "locatedService": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Nombre del servicio donde está almacenado el archivo",
+            "example": "Google Cloud Storage"
+          },
+          "userId": {
+            "type": "string",
+            "description": "Identificador único del usuario propietario del archivo",
+            "example": "user123"
+          }
+        },
+        "description": "Representa un archivo almacenado en el sistema"
+      },
+      "FileDto": {
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "$ref": "#/components/schemas/File"
+          }
+        }
+      }
+    }
+  }
+}

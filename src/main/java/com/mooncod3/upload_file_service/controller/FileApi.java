@@ -22,19 +22,19 @@ import com.mooncod3.upload_file_service.dto.FileDto;
 
 @RequestMapping(path="files", produces="application/json")
 @CrossOrigin(origins="*")
-@Tag(name="file", description="API of File resource")
+@Tag(name="file", description="API for file upload registration")
 public interface FileApi {
-    @Operation(summary = "File upload and registry")
+    @Operation(summary = "File upload registration")
 	@ApiResponses(value = { 
 	  @ApiResponse(responseCode = "201", 
-		description = "File upload an registry sussesfull", 
+		description = "Successful file upload registration", 
 	    content = { 
 	    	@Content(mediaType="application/json", 
 	    	schema = @Schema(implementation=File.class)) 
         }),
     })
 
-	@PostMapping(path="upload", consumes="application/json")
+	@PostMapping(path="register_upload", consumes="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	File saveFile(
 		@NotNull @Valid @RequestBody FileDto request);

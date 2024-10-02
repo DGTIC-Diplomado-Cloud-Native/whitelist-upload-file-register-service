@@ -1,6 +1,4 @@
 package com.mooncod3.upload_file_service.service;
-
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,22 +26,9 @@ public class FileServiceImpl implements FileService {
             throw new IllegalArgumentException("UserId cannot be null");
         }
 
-        if (!userExists(file.getUserId())) {
-            throw new UserIdNotExistException(file.getUserId());
-        }
-
-        try {
-            File savedFile = fileRepository.save(file);
-            LOG.info("File uploaded successfully: {}", savedFile.getUrl());
-            return savedFile;
-        } catch (Exception e) {
-            LOG.error("Error uploading file: {}", file.getUrl(), e);
-            throw new RuntimeException("Error upload file ", e);
-        }
+        File savedFile = fileRepository.save(file);
+        LOG.info("File upload was successfully registered: {}", savedFile.getUrl());
+        return savedFile;
 	}
-
-    private boolean userExists(ObjectId userId) {
-        return fileRepository.existsByUserId(userId);
-    }
 
 }
