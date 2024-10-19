@@ -1,8 +1,7 @@
 FROM openjdk:17-oracle
 LABEL maintainer="Luna Felipe <lunafelipe1997@gmail.com>"
-EXPOSE 8082
+EXPOSE 8081
 ARG JAR_FILE=target/*.jar
+ENV MONGODB_URI=${MONGO_DB_URI}
 COPY target/*.jar app.jar
-ARG MONGODB_URI=mongodb://localhost:27017/files
-ENV SPRING_DATA_MONGODB_URI=${MONGODB_URI}
 CMD ["java", "-jar", "/app.jar"]
